@@ -1,6 +1,6 @@
 # kubernetes
 ## Kubernetes历史
-* Kubernetes是Google10年容器化基础架构：borg，由于Docker的大规模运行，发现市场认可资源管理器，Google使用GO语言对Borg的系统编写开发出了Kubernetes
+* Kubernetes是Google公司10年容器化基础架构：borg，由于Docker的大规模运行，发现市场认可资源管理器，Google使用GO语言对Borg的系统编写开发出了Kubernetes
 ## Kubernetes特点
 * 轻量级
 * 开源
