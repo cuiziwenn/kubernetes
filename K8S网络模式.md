@@ -8,12 +8,16 @@
 
 因此，Kubernetes假设Pod之间能够进行通讯，这些Pod可能部署在不同的宿主机上。每一个Pod都拥有自己的IP地址，因此能够将Pod看作为物理主机或者虚拟机，从而能实现端口设置、命名、服务发现、负载均衡、应用配置和迁移。为了满足上述需求，则需要通过集群网络来实现。
 
-####  同一个Pod中容器之间的通信
+####  同一个Pod内部通讯  
 * 根据Kubernetes的架构设计。Kubernetes创建Pod时，首先会创建一个pause容器，为Pod指派一个唯一的IP地址。然后，以pause的网络命名空间为基础，创建同一个Pod内的其它容器（–net=container:xxx）。因此，同一个Pod内的所有容器就会共享同一个网络命名空间，在同一个Pod之间的容器可以直接使用localhost进行通信。
-#### 不同Pod中容器之间的通信
-* Kubernetes通过flannel、calic等网络插件解决Pod间的通信问题。
+
+#### Pod1到Pod2在同一台主机
+* 由docker0网桥直接转发请求到Pod2，不需要经过flannel
+
+#### Pod1到Pod2不在同一台主机
+* 通过flannel、calic等网络插件解决Pod间的通信问题。
 #### Flannel网络
-* Flannel是CoreOS开源的CNI网络插件，功能是让集群中的不同节点主机创建的Docker容器都具有全集群唯一的虚拟IP地址。
+* Flannel是CoreOS开源的CNI网络插件，功能是让集群中的不同节点主机创建的Docker容器都具有全集群唯一的虚拟IP地址。而且能在这些IP地址之间建立一个覆盖网络（Overlay Network），通过覆盖网络将数据包原封不动地传递到目标容器内
 #### Flannel架构图
 ![imges](https://github.com/cuiziwenn/imgesfile/blob/master/flannel%E7%BD%91%E7%BB%9C.png)
 #### Calico
